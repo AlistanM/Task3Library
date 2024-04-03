@@ -18,7 +18,7 @@ namespace Task3Library.Tests
         public TestsBase() {
 
             Connection connection = new Connection();
-            var data = File.ReadAllText("./appsettings.json");
+            var data = File.ReadAllText("appsettings.json");
             connection = JsonSerializer.Deserialize<Connection>(data, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             _context = new DataContext(connection.ConnectionStrings.FirstOrDefault().Value);
         }

@@ -8,6 +8,6 @@ namespace Task3Library.Tests
 {
     public class Connection
     {
-        public Dictionary<string, string> ConnectionStrings;
+        public Dictionary<string, string> ConnectionStrings { get; set; }
     }
 }

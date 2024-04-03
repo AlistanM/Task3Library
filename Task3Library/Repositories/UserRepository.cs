@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Security.Cryptography;
 using Task3Library.Data;
 using Task3Library.Data.Models;
 
@@ -54,14 +53,10 @@ namespace Task3Library.Repositories
 
         public async Task DeleteUser(long userId)
         {
-            var user = new UserDataModel() { Id = userId };
-            _context.Attach(user);
+            var user = await _context.UserData.FirstOrDefaultAsync(x => x.Id == userId);
             _context.Remove(user);
             await _context.SaveChangesAsync();
         }
-
-    
-        
 
     }
 }

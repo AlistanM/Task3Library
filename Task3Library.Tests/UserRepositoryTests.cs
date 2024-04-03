@@ -1,25 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Task3Library.Data;
+﻿using NUnit.Framework;
 using Task3Library.Data.Models;
 using Task3Library.Repositories;
+using Assert = Xunit.Assert;
 
 namespace Task3Library.Tests
 {
-
+    [TestFixture]
     public class UserRepositoryTests : TestsBase
     {
         private readonly UserRepository _repository;
 
-        public UserRepositoryTests() {
+        public UserRepositoryTests()
+        {
             _repository = new UserRepository(_context);
         }
 
+        [Test]
         public async Task AddUserTestSuccess()
         {
             var user = new UserDataModel() { Name = "Test", Password = "Test123", State = "Online" };
@@ -29,8 +25,10 @@ namespace Task3Library.Tests
 
             await _repository.DeleteUser(id);
         }
-        
-        public async Task GetUserByNameTestSuccess() {
+
+        [Test]
+        public async Task GetUserByNameTestSuccess()
+        {
 
             var user = new UserDataModel() { Name = "Test", Password = "Test123", State = "Online" };
             await _repository.AddUser(user);
@@ -40,6 +38,7 @@ namespace Task3Library.Tests
             await _repository.DeleteUser(user.Id);
         }
 
+        [Test]
         public async Task SearchUserByNameTestSuccess()
         {
             var user1 = new UserDataModel() { Name = "Test1", Password = "Test123", State = "Online" };
@@ -52,12 +51,13 @@ namespace Task3Library.Tests
             var users = await _repository.SearchUserByName(x => x.Name.Contains("Te"));
             Assert.Equal(users.Length, 3);
 
-            for(int i = 0; i < users.Length; i++)
+            for (int i = 0; i < users.Length; i++)
             {
                 await _repository.DeleteUser(users[i].Id);
             }
         }
 
+        [Test]
         public async Task UpdateUserTestSuccess()
         {
             var user = new UserDataModel() { Name = "Test", Password = "Test123", State = "Online" };
